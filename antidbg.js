@@ -20,5 +20,5 @@ setInterval(() => {
     })*/
 
     navigator.serviceWorker.controller.postMessage("ping");
-    if(document.visibilityState == "visible" && Date.now() - deltaTime > 150) location = "about:blank";
+    if(document.visibilityState == "visible" && Date.now() - deltaTime > 300) location = "about:blank";
 }, 100)
