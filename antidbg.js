@@ -1,24 +1,36 @@
 (function () {
     if(!('mozInnerScreenX' in window)) return;
-    let ptrEx = /./;
+    let ptrEx = /😹/;
     console.log(ptrEx);
     ptrEx.toString = () => window.location = 'about:blank';
     debugger;
 })();
 
-navigator.serviceWorker.register("./sw.js").then(() => {
-    if(!navigator.serviceWorker.controller) location.reload();
-})
+function makeLargeObjectArray() {
+    let result = [];
+    let obj = {};
+    for(let i=0; i<500; i++) obj[i] = i;
+    for(let i=0; i<50; i++) result.push(obj);
+    
+    return result;
+}
 
-let deltaTime = Date.now();
-document.addEventListener("visibilitychange", () => deltaTime = Date.now());
-navigator.serviceWorker.addEventListener("message", (e) => deltaTime = e.data);
+function getTimeDif(logFunc) {
+    let deltaTime = Date.now();
+    return logFunc(), Date.now() - deltaTime;
+}
+
+let maxPrintTime = 0;
+let largeObjectArray = makeLargeObjectArray();
 
 setInterval(() => {
-    /*document.querySelectorAll("script").forEach(elem => {
-        if(elem.src.includes("eruda") || elem.src.includes("vconsole")) location = "about:blank";
-    })*/
+    let tableTime = getTimeDif(() => console.table(largeObjectArray));
+    let logTime = getTimeDif(() => console.log(largeObjectArray));
 
-    navigator.serviceWorker.controller.postMessage("ping");
-    if(document.visibilityState == "visible" && Date.now() - deltaTime > 300) location = "about:blank";
-}, 100)
+    maxPrintTime = Math.max(maxPrintTime, logTime);
+    console.clear()
+
+    if (tableTime === 0 || maxPrintTime === 0) return;
+
+    if(tableTime > 10 * maxPrintTime) location = "about:blank";
+}, 200)
