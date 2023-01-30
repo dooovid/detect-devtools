@@ -1,6 +1,6 @@
 # 🔮 Preventing devtools fast and efficiently
 A lightweight solution for preventing a user from opening the browser DevTools on a given website.
-<br>Try live demo <a href="https://dooovid.github.io/detect-devtools/index.html">here</a>.</br>
+<br>**Try live demo <a href="https://dooovid.github.io/detect-devtools/index.html">here</a>.**</br>
 # 🪄 Implementation
 Simply include the script in the `<head>` of your HTML doument like so:
 ```html
