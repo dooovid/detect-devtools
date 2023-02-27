@@ -20,12 +20,17 @@ function getTimeDif(logFunc) {
     return logFunc(), Date.now() - deltaTime;
 }
 
+(() => {
+
+let tbl = console.table;
+let lg = console.log;
+
 let maxPrintTime = 0;
 let largeObjectArray = makeLargeObjectArray();
 
 setInterval(() => {
-    let tableTime = getTimeDif(() => console.table(largeObjectArray));
-    let logTime = getTimeDif(() => console.log(largeObjectArray));
+    let tableTime = getTimeDif(() => tbl(largeObjectArray));
+    let logTime = getTimeDif(() => lg(largeObjectArray));
 
     maxPrintTime = Math.max(maxPrintTime, logTime);
     console.clear()
@@ -34,3 +39,5 @@ setInterval(() => {
 
     if(tableTime > 10 * maxPrintTime && document.visibilityState === "visible") location = "about:blank";
 }, 200)
+
+})();
