@@ -37,7 +37,7 @@ setInterval(() => {
 
     if (tableTime === 0 || maxPrintTime === 0) return;
 
-    if(tableTime > 10 * maxPrintTime && document.visibilityState === "visible") location = "about:blank";
+    if(tableTime > 10 * maxPrintTime && document.visibilityState === "visible") location.replace = "about:blank";
 }, 200)
 
 })();
